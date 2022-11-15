@@ -35,7 +35,12 @@ class MyCog(commands.Cog):
                 search = language to be searched
         """
 
-        with open('info.json') as json_file:
+        with open('data/mycog/info.json') as json_file:
             data = json.load(json_file)
         if search == None:
-            print(data['languages'])
+            await ctx.send(data['languages1'])
+            await ctx.send(data['languages2'])
+        else:
+            for language in data['languages']:
+                if language["English"] == search:
+                    await ctx.send(language)
