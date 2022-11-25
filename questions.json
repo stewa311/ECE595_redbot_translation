@@ -1,0 +1,19 @@
+{
+    "supported_languages": {"English":"en", "French":"fr", "German":"de", "Spanish":"es"},
+    "en": {
+        "1": ["ENQuestion1", "ENQuestion2","ENQuestion3", "ENQuestion4", "ENQuestion5"],
+        "1a": ["Answer1", "Answer2", "Answer3", "Answer4", "Answer5"]
+    },
+    "fr": {
+        "1": ["FRQuestion1", "FRQuestion2","FRQuestion3", "FRQuestion4", "FRQuestion5"],
+        "1a":["Answer1", "Answer2", "Answer3", "Answer4", "Answer5"]
+    },
+    "de": {
+        "1": ["DEQuestion1", "DEQuestion2","DEQuestion3", "DEQuestion4", "DEQuestion5"],
+        "1a":["Answer1", "Answer2", "Answer3", "Answer4", "Answer5"]
+    },
+    "es": {
+        "1": ["ESQuestion1", "ESQuestion2","ESQuestion3", "ESQuestion4", "ESQuestion5"],
+        "1a":["Answer1", "Answer2", "Answer3", "Answer4", "Answer5"]
+    }
+}
