@@ -89,3 +89,36 @@ class MyCog(commands.Cog):
             await ctx.send(', '.join(question.values()))
         else:
             await ctx.send("Thats not it. Try again!")
+            
+            
+    @commands.command()
+    async def guess(self, ctx, guess: str):
+        #await ctx.send("Test " + guess)
+        guess_list = list(guess.lower())
+        if len(guess) != 5:
+            await ctx.send("Please guess a 5 letter word!")
+        if len(guess) == 5:
+            result = ''
+            # can maybe upgrade this to a hashmap
+            for i in range(len(guess_list)):
+                if guess_list[i] not in list(self.word):
+                    result += " :red_square:"
+                    #result += "```ansi\n\u001b[1;31m" + guess_list[i] + "```"
+                    self.count += 1
+                elif (guess_list[i] in list(self.word)) and (self.word[i] != guess_list[i]):
+                    result += " :yellow_square:"
+                    #result += "```ansi\n\u001b[1;33m" + guess_list[i] + "```"
+                    self.count += 1
+                elif guess_list[i] == self.word[i]:
+                    result += " :green_square:"
+                    #result += "```ansi\n\u001b[1;32m" + guess_list[i]
+                    self.count += 1
+            await ctx.send(result + "     " + " Tries: " + str(int(self.count / 5)))
+
+            if result == " :green_square:" * 5:
+                await ctx.channel.send(
+                    "Congratulations. You have got the word in " + str(int(self.count / 5)) + " tries")
+                #await ctx.send("The word has been reset. Start guessing again!")
+                #word = random.choice(word_list)
+                #count = 0
+                print(self.word)
