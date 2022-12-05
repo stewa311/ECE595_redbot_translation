@@ -102,6 +102,9 @@ class MyCog(commands.Cog):
         try:
             with open('data/mycog/currentQuestion.json') as json_file:
                 question = json.load(json_file)
+            if question == None:
+                await ctx.send("No active quiz")
+                return
         except FileNotFoundError:
             await ctx.send("No active quiz")
             return
