@@ -44,7 +44,6 @@ class MyCog(commands.Cog):
                 msg = message to be translated
         """
         
-        #await ctx.send(lang)
         translator = Translator(to_lang=lang)
         await ctx.send(translator.translate(msg))
     
