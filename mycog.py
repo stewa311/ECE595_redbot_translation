@@ -2,6 +2,7 @@ from redbot.core import commands
 from translate import Translator
 from random import randint
 import json
+import os
 
 class MyCog(commands.Cog):
     """My custom cog"""
@@ -161,6 +162,11 @@ class MyCog(commands.Cog):
         input_data = {"username": username,
                 "wordle":0,
                 "quiz":0}
+
+        with open(self.filepath, "a+") as file:
+            file.seek(0)
+            if not file.read():
+                json.dump([], file, indent=4)
 
         with open(self.filepath, "r") as file:
             data = json.load(file)
