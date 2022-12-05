@@ -8,8 +8,8 @@ class MyCog(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
+        self.numanswers = 0
         self.filepath = 'data/mycog/user.json' #Change it to the right user filepath
-        
 
     def update_quizScore(self, score, username):
         with open(self.filepath, "r") as file:
@@ -17,12 +17,11 @@ class MyCog(commands.Cog):
 
         for user in data:
             if (user["username"].lower() == username.lower()):
-                user["quiz"] = score
+                user["quiz"] += score
                 break
         
         with open(self.filepath, "w") as file:
             json.dump(data, file, indent=4)
-
 
     def update_wordleScore(self, score, username):
         with open(self.filepath, "r") as file:
@@ -30,15 +29,14 @@ class MyCog(commands.Cog):
 
         for user in data:
             if (user["username"].lower() == username.lower()):
-                user["wordle"] = score
+                user["wordle"] += score
                 break
         
         with open(self.filepath, "w") as file:
             json.dump(data, file, indent=4)    
 
-
     @commands.command()
-    async def trans(self, ctx, lang, msg="This does something!"):
+    async def trans(self, ctx, lang, msg="This translates messages!"):
         """This translates a message to the given language
         
             inputs:
@@ -68,17 +66,17 @@ class MyCog(commands.Cog):
                 if language["English"] == search:
                     await ctx.send(language["English"] +": " + language["alpha2"])
 
-
     @commands.command()
     async def quiz(self, ctx, lang, difficulty="1", length=1):
         """This command starts a quiz
         
             inputs:
-                lang = language to be quized (case sensative)
+                lang = language to be quized (lowercase)
                 length = number of quiz questions to be asked
                 difficulty = difficulty level (1-3)
         """
 
+        self.numanswers = 0
         with open('data/mycog/questions.json') as json_file:
             data = json.load(json_file)
         if lang in data['supported_languages'].keys():
@@ -95,7 +93,7 @@ class MyCog(commands.Cog):
             #    qn = randint(1,10)
             #    await ctx.send("Question " + str(i) + ": " + str(qn))
                 
-    @commands.command()
+    @commands.command(pass_context=True)
     async def answer(self, ctx, answer=None):
         """This command sends an answer to the current quiz
         
@@ -105,14 +103,23 @@ class MyCog(commands.Cog):
 
         with open('data/mycog/currentQuestion.json') as json_file:
             question = json.load(json_file)
+        if question == None:
+            await ctx.send("No active quiz")
+            return
         if answer in question.values():
-            await ctx.send("Correct!")
-            #MyCog.update_quizScore(self, 1, "Matt")
+            await ctx.send("Correct! Quiz complete.")
+            MyCog.update_quizScore(self, 1, str(ctx.message.author))
+            with open('data/mycog/currentQuestion.json', 'w') as outfile:
+                json.dump(None, outfile)
         elif answer == "__GIVEMETHEANSWER__":
             await ctx.send(', '.join(question.values()))
         else:
+            self.numanswers +=1
+            if self.numanswers >= 4:
+                await ctx.send("Too many incorrect tries, ending quiz")
+                with open('data/mycog/currentQuestion.json', 'w') as outfile:
+                    json.dump(None, outfile)
             await ctx.send("Thats not it. Try again!")
-            
             
     @commands.command()
     async def guess(self, ctx, guess: str):
@@ -145,12 +152,12 @@ class MyCog(commands.Cog):
                 #word = random.choice(word_list)
                 #count = 0
                 print(self.word)
-    
 
-    @commands.command()    
-    async def register_user(self, ctx, username):
+    @commands.command()
+    async def register_user(self, ctx, username=None):
+
         if (username == None) or (username == ""):
-            await ctx.send("Please enter a valid username after the command.")
+            username = str(ctx.message.author)
 
         input_data = {"username": username,
                 "wordle":0,
@@ -171,7 +178,6 @@ class MyCog(commands.Cog):
             json.dump(data, file, indent=4)
             await ctx.send(f"{username} is registered")
 
-    
     @commands.command()    
     async def delete_user(self, ctx, username):
         if (username == None) or (username == ""):
@@ -190,7 +196,6 @@ class MyCog(commands.Cog):
                 return
         
         await ctx.send(f"{real_id} doesn't exist!")
-
 
     @commands.command()    
     async def leaderboard(self, ctx):

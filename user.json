@@ -18,5 +18,15 @@
         "username": "Joe",
         "wordle": 0,
         "quiz": 2
+    },
+    {
+        "username": "test",
+        "wordle": 0,
+        "quiz": 0
+    },
+    {
+        "username": "Matt.#1996",
+        "wordle": 0,
+        "quiz": 2
     }
 ]
