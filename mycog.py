@@ -10,6 +10,7 @@ class MyCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.numanswers = 0
+        self.maxtries = 3
         self.filepath = 'data/mycog/user.json' #Change it to the right user filepath
 
     def update_quizScore(self, score, username):
@@ -56,7 +57,7 @@ class MyCog(commands.Cog):
                 search = language to be searched (case sensative)
         """
 
-        with open('data/mycog/info.json') as json_file:
+        with open('data/mycog/languages.json') as json_file:
             data = json.load(json_file)
         if search not in data['languages']:
             await ctx.send(data['languages1'])
@@ -67,7 +68,7 @@ class MyCog(commands.Cog):
                     await ctx.send(language["English"] +": " + language["alpha2"])
 
     @commands.command()
-    async def quiz(self, ctx, lang, difficulty="1", length=1):
+    async def quiz(self, ctx, lang, difficulty="1", tries=3):
         """This command starts a quiz
         
             inputs:
@@ -75,8 +76,9 @@ class MyCog(commands.Cog):
                 length = number of quiz questions to be asked
                 difficulty = difficulty level (1-3)
         """
-
+        
         self.numanswers = 0
+        self.maxtries = tries
         with open('data/mycog/questions.json') as json_file:
             data = json.load(json_file)
         if lang in data['supported_languages'].keys():
@@ -88,12 +90,8 @@ class MyCog(commands.Cog):
             with open('data/mycog/currentQuestion.json', 'w') as outfile:
                 json.dump({data[lang][difficulty][qn]:data[lang][difficulty+"a"][qn]}, outfile)
             await ctx.send(data[lang][difficulty][qn])
-            #await ctx.send("Quiz Started")
-            #for i in range(1,length + 1):
-            #    qn = randint(1,10)
-            #    await ctx.send("Question " + str(i) + ": " + str(qn))
-                
-    @commands.command(pass_context=True)
+
+    @commands.command()
     async def answer(self, ctx, answer=None):
         """This command sends an answer to the current quiz
         
@@ -101,11 +99,13 @@ class MyCog(commands.Cog):
                 answer = the players answer to the current quiz
         """
 
-        with open('data/mycog/currentQuestion.json') as json_file:
-            question = json.load(json_file)
-        if question == None:
+        try:
+            with open('data/mycog/currentQuestion.json') as json_file:
+                question = json.load(json_file)
+        except FileNotFoundError:
             await ctx.send("No active quiz")
             return
+
         if answer in question.values():
             await ctx.send("Correct! Quiz complete.")
             MyCog.update_quizScore(self, 1, str(ctx.message.author))
@@ -115,10 +115,11 @@ class MyCog(commands.Cog):
             await ctx.send(', '.join(question.values()))
         else:
             self.numanswers +=1
-            if self.numanswers >= 4:
+            if self.numanswers >= self.maxtries:
                 await ctx.send("Too many incorrect tries, ending quiz")
                 with open('data/mycog/currentQuestion.json', 'w') as outfile:
                     json.dump(None, outfile)
+                return
             await ctx.send("Thats not it. Try again!")
             
     @commands.command()
