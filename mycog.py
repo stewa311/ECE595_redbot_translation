@@ -8,13 +8,34 @@ class MyCog(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
-        self.filepath = "/home/nishantsk17/Desktop/ece595/mycog/user.json" #Change it to the right user filepath
+        self.filepath = 'data/mycog/user.json' #Change it to the right user filepath
+        
 
-    @commands.command()
-    async def mycom(self, ctx):
-        """This does stuff!"""
-        # Your code will go here
-        await ctx.send("I can do stuff!")
+    def update_quizScore(self, score, username):
+        with open(self.filepath, "r") as file:
+            data = json.load(file)
+
+        for user in data:
+            if (user["username"].lower() == username.lower()):
+                user["quiz"] = score
+                break
+        
+        with open(self.filepath, "w") as file:
+            json.dump(data, file, indent=4)
+
+
+    def update_wordleScore(self, score, username):
+        with open(self.filepath, "r") as file:
+            data = json.load(file)
+
+        for user in data:
+            if (user["username"].lower() == username.lower()):
+                user["wordle"] = score
+                break
+        
+        with open(self.filepath, "w") as file:
+            json.dump(data, file, indent=4)    
+
 
     @commands.command()
     async def trans(self, ctx, lang, msg="This does something!"):
@@ -86,6 +107,7 @@ class MyCog(commands.Cog):
             question = json.load(json_file)
         if answer in question.values():
             await ctx.send("Correct!")
+            #MyCog.update_quizScore(self, 1, "Matt")
         elif answer == "__GIVEMETHEANSWER__":
             await ctx.send(', '.join(question.values()))
         else:
@@ -124,7 +146,7 @@ class MyCog(commands.Cog):
                 #count = 0
                 print(self.word)
     
-    #Leaderboard commands
+
     @commands.command()    
     async def register_user(self, ctx, username):
         if (username == None) or (username == ""):
@@ -143,12 +165,12 @@ class MyCog(commands.Cog):
                 await ctx.send(f"{real_id} is already registered!")
                 return
                 
-    
         data.append(input_data)
         
         with open(self.filepath, "w") as file:
             json.dump(data, file, indent=4)
             await ctx.send(f"{username} is registered")
+
     
     @commands.command()    
     async def delete_user(self, ctx, username):
@@ -169,9 +191,10 @@ class MyCog(commands.Cog):
         
         await ctx.send(f"{real_id} doesn't exist!")
 
+
     @commands.command()    
     async def leaderboard(self, ctx):
-        with open(self.filepath, "r") as file:
+        with open('data/mycog/user.json', "r") as file:
             data = json.load(file)
         
         board = []
@@ -205,27 +228,3 @@ class MyCog(commands.Cog):
 
         await ctx.send(table)
     
-    def update_quizScore(self, score, username):
-        with open(self.filepath, "r") as file:
-            data = json.load(file)
-
-        for user in data:
-            if (user["username"].lower() == username.lower()):
-                user["quiz"] = score
-                break
-        
-        with open(self.filepath, "w") as file:
-            json.dump(data, file, indent=4)
-
-    def update_wordleScore(self, score, username):
-        with open(self.filepath, "r") as file:
-            data = json.load(file)
-
-        for user in data:
-            if (user["username"].lower() == username.lower()):
-                user["wordle"] = score
-                break
-        
-        with open(self.filepath, "w") as file:
-            json.dump(data, file, indent=4)           
-     
