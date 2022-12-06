@@ -26,6 +26,7 @@ class MyCog(commands.Cog):
         self.bot = bot
         self.numanswers = 0
         self.maxtries = 2
+        self.default_difficulty = "1"
         self.filepath = 'data/mycog/user.json' #Change it to the right user filepath
         
         #Wordle
@@ -94,7 +95,7 @@ class MyCog(commands.Cog):
         await ctx.send("".join(temp))
 
     @commands.command()
-    async def quiz_settings(self, ctx, maxtries=2):
+    async def quiz_settings(self, ctx, maxtries=2, default_difficulty="1"):
         """This sets quiz settings
         
             inputs:
@@ -103,9 +104,11 @@ class MyCog(commands.Cog):
 
         self.maxtries = maxtries
         await ctx.send("Max tries set to " + str(self.maxtries))
+        self.default_difficulty = default_difficulty
+        await ctx.send("Default difficulty set to " + str(self.default_difficulty))
 
     @commands.command()
-    async def quiz(self, ctx, lang, difficulty="1"):
+    async def quiz(self, ctx, lang, difficulty=None):
         """This command starts a quiz
         
             inputs:
@@ -113,7 +116,8 @@ class MyCog(commands.Cog):
                 length = number of quiz questions to be asked
                 difficulty = difficulty level (1-3)
         """
-        
+        if difficulty is None:
+            difficulty = self.default_difficulty
         self.numanswers = 0
         with open('data/mycog/questions.json') as json_file:
             data = json.load(json_file)
