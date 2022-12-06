@@ -175,9 +175,7 @@ class MyCog(commands.Cog):
             await ctx.send("Error: Language not supported \nSupported Languages: " + ', '.join(lang_dict.keys()))
             return
 
-        self.fp = str(os.path.dirname(os.path.abspath(__file__))) + '/' + str(self.lang) + '.json'
-        #fp = 'ECE595_redbot_translation/' + str(lang) + '.json'
-
+        self.fp = 'data/mycog/' + str(self.lang) + '.json'
         with open(self.fp) as json_file:
             data = json.load(json_file)
 
@@ -245,14 +243,14 @@ class MyCog(commands.Cog):
             image_binary.seek(0)
             await ctx.send(file=discord.File(image_binary, "abc.png"))
 
-        if len(self.endgame(guess)) > 0:
-            await ctx.send(self.endgame(guess))
+        if len(self.endgame(ctx, guess)) > 0:
+            await ctx.send(self.endgame(ctx, guess))
 
-    def endgame(self, guess):
+    def endgame(self, ctx, guess):
         msg = ""
         if guess == self.word and self.count <= 6:
-		msg = "Congrats!!! You won in " + str(self.count) + " tries"
-		MyCog.update_wordleScore(self, 1, str(ctx.message.author))
+            msg = "Congrats!!! You won in " + str(self.count) + " tries"
+            MyCog.update_wordleScore(self, 1, str(ctx.message.author))
 
         elif self.count == 6:
             msg = "Darn, the word was: " + self.word + "\nTo play a new game enter ' %start <lang>'"
@@ -315,7 +313,8 @@ class MyCog(commands.Cog):
 
         with open(self.filepath, "r") as file:
             data = json.load(file)
-            
+
+        real_id = username
         for user in data:
             if (user["username"].lower() == username.lower()):
                 real_id = user["username"]
@@ -324,7 +323,7 @@ class MyCog(commands.Cog):
                     json.dump(data, file, indent=4)
                 await ctx.send(f"{real_id} is deleted.")
                 return
-        
+
         await ctx.send(f"{real_id} doesn't exist!")
 
     @commands.command()    
