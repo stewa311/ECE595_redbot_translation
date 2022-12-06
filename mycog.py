@@ -275,6 +275,11 @@ class MyCog(commands.Cog):
 
     @commands.command()
     async def register_user(self, ctx, username=None):
+	"""This command registers a new user
+        
+            inputs:
+                username = The username you want to store for the user
+        """	
 
         if (username == None) or (username == ""):
             username = str(ctx.message.author)
@@ -304,7 +309,13 @@ class MyCog(commands.Cog):
             await ctx.send(f"{username} is registered")
 
     @commands.command()    
-    async def delete_user(self, ctx, username):
+    async def delete_user(self, ctx, username=None):
+    	"""This command deletes an existing user
+        
+            inputs:
+                username = The username of the user you want to delete
+        """	
+    
         if (username == None) or (username == ""):
             await ctx.send("Please enter a valid username after the command.")
 
@@ -324,6 +335,8 @@ class MyCog(commands.Cog):
 
     @commands.command()    
     async def leaderboard(self, ctx):
+    	"""This command shows the leaderboard for the games"""
+    
         with open('data/mycog/user.json', "r") as file:
             data = json.load(file)
         
