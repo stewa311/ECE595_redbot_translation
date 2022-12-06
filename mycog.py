@@ -31,9 +31,10 @@ class MyCog(commands.Cog):
         #Wordle
         self.word = ""
         self.count = 0
-        # self.data = []
         self.background = None
         self.rowOffset = 0
+        self.lang = "eng"
+        self.fp = None
 
     def update_quizScore(self, score, username):
         with open(self.filepath, "r") as file:
@@ -159,9 +160,25 @@ class MyCog(commands.Cog):
     
     #Wordle
     @commands.command()
-    async def start(self, ctx):
-        # load in word
-        self.word = 'tower'
+    async def start(self, ctx, lang):
+        # load in word, how to do decide which
+
+        # Error check the language? Or should we sync with quiz game
+        lang_dict = {"English": "eng", "French": "fra", "Italian": "ita", "Latin": "lat", "Portugese": "por", "Spanish": "spa"}
+        if lang in lang_dict.keys():
+            lang = lang_dict[lang]
+            self.lang = lang
+        else:
+            await ctx.send("Error: Language not supported \nSupported Languages: " + ', '.join(lang_dict.keys()))
+            return
+
+        self.fp = str(os.path.dirname(os.path.abspath(__file__))) + '/' + str(self.lang) + '.json'
+        #fp = 'ECE595_redbot_translation/' + str(lang) + '.json'
+
+        with open(self.fp) as json_file:
+            data = json.load(json_file)
+
+        self.word = data[randint(0, len(data)-1)]
         self.count = 0
         self.background = Image.new('RGB', size=(width, height))
         self.rowOffset = 0
@@ -177,7 +194,6 @@ class MyCog(commands.Cog):
                 buffer += 5
                 row.append("")
 
-            self.data.append(row)
             rowOffset_setup += squareSize + 5
             buffer = 0
 
@@ -199,8 +215,6 @@ class MyCog(commands.Cog):
         buffer = 0
 
         for j in range(5):
-            # self.data[self.count - 1][j] = guess_list[j]
-
             if guess_list[j] not in list(self.word):
                 square = EmptySquare
             elif (guess_list[j] in list(self.word)) and (self.word[j] != guess_list[j]):
@@ -236,21 +250,22 @@ class MyCog(commands.Cog):
         if guess == self.word and self.count <= 6:
             msg = "Congrats!!! You won in " + str(self.count) + " tries"
         elif self.count == 6:
-            msg = "Darn, to play a new game enter '%start'"
+            msg = "Darn, the word was: " + self.word + "\nTo play a new game enter ' %start <lang>'"
         return msg
 
     def invalid_check(self, guess):
         msg = ""
-        # Translate messages
+        with open(self.fp) as json_file:
+            data = json.load(json_file)
 
         if self.count >= 6:
             # Count needs to be less than 5
-            msg = "Please start a new game by entering ' %start '"
+            msg = "Please start a new game by entering ' %start <lang>'"
         elif len(guess) != 5:
             # Length needs to be 5
             msg = "Please guess a 5 letter word!"
-
-        #   elif Needs to be a valid word (check in .txt file)
+        elif guess not in data:
+            msg = "Please guess a valid word!"
 
         return msg
     
