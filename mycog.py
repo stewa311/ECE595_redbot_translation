@@ -82,13 +82,16 @@ class MyCog(commands.Cog):
 
         with open('data/mycog/languages.json') as json_file:
             data = json.load(json_file)
-        if search not in data['languages']:
-            await ctx.send(data['languages1'])
-            await ctx.send(data['languages2'])
-        else:
-            for language in data['languages']:
-                if language["English"] == search:
-                    await ctx.send(language["English"] +": " + language["alpha2"])
+
+        for language in data['languages']:
+            if language["English"] == search:
+                await ctx.send(language["English"] +": " + language["alpha2"])
+                return
+
+        temp = [language["English"] + ": " + language["alpha2"] + "\n" for language in data['languages1']]
+        await ctx.send("".join(temp))
+        temp = [language["English"] + ": " + language["alpha2"] + "\n" for language in data['languages2']]
+        await ctx.send("".join(temp))
 
     @commands.command()
     async def quiz_settings(self, ctx, maxtries=2):
@@ -161,6 +164,11 @@ class MyCog(commands.Cog):
     #Wordle
     @commands.command()
     async def start(self, ctx, lang):
+        """This command starts a wordle game
+        
+            inputs:
+                lang = language to play a game with
+        """
         # load in word, how to do decide which
 
         # Error check the language? Or should we sync with quiz game
@@ -204,6 +212,11 @@ class MyCog(commands.Cog):
     
     @commands.command()
     async def guess(self, ctx, guess: str):
+        """This command is used to make a guess in the wordle game
+        
+            inputs:
+                guess = five letter word guess
+        """
         # Validate guess
         if self.invalid_check(guess):
             await ctx.send(self.invalid_check(guess))
