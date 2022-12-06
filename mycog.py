@@ -4,6 +4,21 @@ from random import randint
 import json
 import os
 
+# Wordle
+import discord
+from io import BytesIO
+from PIL import Image, ImageDraw, ImageFont
+
+squareSize = 62
+width = 330
+height = 397
+
+ColorAbsent = Image.new('RGB', size=(squareSize, squareSize), color=(58, 58, 60))
+EmptySquare = Image.new('RGB', size=(squareSize, squareSize), color=(197, 197, 195))
+GreenSquare = Image.new('RGB', size=(squareSize, squareSize), color=(83, 141, 78))
+YellowSquare = Image.new('RGB', size=(squareSize, squareSize), color=(181, 159, 59))
+
+
 class MyCog(commands.Cog):
     """My custom cog"""
 
@@ -12,6 +27,13 @@ class MyCog(commands.Cog):
         self.numanswers = 0
         self.maxtries = 3
         self.filepath = 'data/mycog/user.json' #Change it to the right user filepath
+        
+        #Wordle
+        self.word = ""
+        self.count = 0
+        # self.data = []
+        self.background = None
+        self.rowOffset = 0
 
     def update_quizScore(self, score, username):
         with open(self.filepath, "r") as file:
@@ -124,38 +146,107 @@ class MyCog(commands.Cog):
                     json.dump(None, outfile)
                 return
             await ctx.send("Thats not it. Try again!")
-            
+    
+    #Wordle
+    @commands.command()
+    async def start(self, ctx):
+        # load in word
+        self.word = 'tower'
+        self.count = 0
+        self.background = Image.new('RGB', size=(width, height))
+        self.rowOffset = 0
+
+        rowOffset_setup = 0
+        buffer = 0
+
+        for i in range(6):
+            row = []
+            for j in range(5):
+                square = EmptySquare
+                self.background.paste(square, (j * squareSize + buffer, rowOffset_setup))
+                buffer += 5
+                row.append("")
+
+            self.data.append(row)
+            rowOffset_setup += squareSize + 5
+            buffer = 0
+
+        with BytesIO() as image_binary:
+            self.background.save(image_binary, 'PNG')
+            image_binary.seek(0)
+            await ctx.send(file=discord.File(image_binary, "abc.png"))
+    
     @commands.command()
     async def guess(self, ctx, guess: str):
-        #await ctx.send("Test " + guess)
-        guess_list = list(guess.lower())
-        if len(guess) != 5:
-            await ctx.send("Please guess a 5 letter word!")
-        if len(guess) == 5:
-            result = ''
-            # can maybe upgrade this to a hashmap
-            for i in range(len(guess_list)):
-                if guess_list[i] not in list(self.word):
-                    result += " :red_square:"
-                    #result += "```ansi\n\u001b[1;31m" + guess_list[i] + "```"
-                    self.count += 1
-                elif (guess_list[i] in list(self.word)) and (self.word[i] != guess_list[i]):
-                    result += " :yellow_square:"
-                    #result += "```ansi\n\u001b[1;33m" + guess_list[i] + "```"
-                    self.count += 1
-                elif guess_list[i] == self.word[i]:
-                    result += " :green_square:"
-                    #result += "```ansi\n\u001b[1;32m" + guess_list[i]
-                    self.count += 1
-            await ctx.send(result + "     " + " Tries: " + str(int(self.count / 5)))
+        # Validate guess
+        if self.invalid_check(guess):
+            await ctx.send(self.invalid_check(guess))
+            return
 
-            if result == " :green_square:" * 5:
-                await ctx.channel.send(
-                    "Congratulations. You have got the word in " + str(int(self.count / 5)) + " tries")
-                #await ctx.send("The word has been reset. Start guessing again!")
-                #word = random.choice(word_list)
-                #count = 0
-                print(self.word)
+        # Guess is valid
+        guess_list = list(guess.lower())
+        square = ColorAbsent
+        buffer = 0
+
+        for j in range(5):
+            # self.data[self.count - 1][j] = guess_list[j]
+
+            if guess_list[j] not in list(self.word):
+                square = EmptySquare
+            elif (guess_list[j] in list(self.word)) and (self.word[j] != guess_list[j]):
+                square = YellowSquare
+            elif guess_list[j] == self.word[j]:
+                square = GreenSquare
+
+            # Update grid
+            x_offset = j * squareSize + buffer
+            self.background.paste(square, (x_offset, self.rowOffset))
+
+            myFont = ImageFont.truetype('arial.ttf', 42)
+            editable = ImageDraw.Draw(self.background)
+            _, _, w, h = editable.textbbox((0, 0), str(guess_list[j]), font=myFont)
+            editable.text(((squareSize - w) // 2 + x_offset, (squareSize - h) // 2 + self.rowOffset),
+                          str(guess_list[j]), font=myFont, fill=(40, 37, 35))
+
+            buffer += 5
+
+        self.rowOffset += squareSize + 5
+        self.count += 1
+
+        with BytesIO() as image_binary:
+            self.background.save(image_binary, 'PNG')
+            image_binary.seek(0)
+            await ctx.send(file=discord.File(image_binary, "abc.png"))
+
+        if len(self.endgame(guess)) > 0:
+            await ctx.send(self.endgame(guess))
+
+    def endgame(self, guess):
+        msg = ""
+        if guess == self.word and self.count <= 6:
+            msg = "Congrats!!! You won in " + str(self.count) + " tries"
+        elif self.count == 6:
+            msg = "Darn, to play a new game enter '%start'"
+        return msg
+
+    def invalid_check(self, guess):
+        msg = ""
+        # Translate messages
+
+        if self.count >= 6:
+            # Count needs to be less than 5
+            msg = "Please start a new game by entering ' %start '"
+        elif len(guess) != 5:
+            # Length needs to be 5
+            msg = "Please guess a 5 letter word!"
+
+        #   elif Needs to be a valid word (check in .txt file)
+
+        return msg
+    
+    # End Wordle  
+                
+                
 
     @commands.command()
     async def register_user(self, ctx, username=None):
