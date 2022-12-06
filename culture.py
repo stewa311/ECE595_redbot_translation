@@ -19,14 +19,14 @@ GreenSquare = Image.new('RGB', size=(squareSize, squareSize), color=(83, 141, 78
 YellowSquare = Image.new('RGB', size=(squareSize, squareSize), color=(181, 159, 59))
 
 
-class MyCog(commands.Cog):
+class culture(commands.Cog):
     """My custom cog"""
 
     def __init__(self, bot):
         self.bot = bot
         self.numanswers = 0
         self.maxtries = 2
-        self.filepath = 'data/mycog/user.json' #Change it to the right user filepath
+        self.filepath = 'data/culture/user.json' #Change it to the right user filepath
         
         #Wordle
         self.word = ""
@@ -80,7 +80,7 @@ class MyCog(commands.Cog):
                 search = language to be searched (case sensative)
         """
 
-        with open('data/mycog/languages.json') as json_file:
+        with open('data/culture/languages.json') as json_file:
             data = json.load(json_file)
 
         for language in data['languages']:
@@ -115,7 +115,7 @@ class MyCog(commands.Cog):
         """
         
         self.numanswers = 0
-        with open('data/mycog/questions.json') as json_file:
+        with open('data/culture/questions.json') as json_file:
             data = json.load(json_file)
         if lang in data['supported_languages'].keys():
             lang = data['supported_languages'][lang]
@@ -123,7 +123,7 @@ class MyCog(commands.Cog):
             await ctx.send("Error: Language not supported \nSupported Languages: " + ', '.join(data['supported_languages']))
         else:
             qn = randint(0,len(data[lang][difficulty])-1)
-            with open('data/mycog/currentQuestion.json', 'w') as outfile:
+            with open('data/culture/currentQuestion.json', 'w') as outfile:
                 json.dump({data[lang][difficulty][qn]:data[lang][difficulty+"a"][qn]}, outfile)
             await ctx.send(data[lang][difficulty][qn])
 
@@ -136,7 +136,7 @@ class MyCog(commands.Cog):
         """
 
         try:
-            with open('data/mycog/currentQuestion.json') as json_file:
+            with open('data/culture/currentQuestion.json') as json_file:
                 question = json.load(json_file)
             if question == None:
                 await ctx.send("No active quiz")
@@ -147,8 +147,8 @@ class MyCog(commands.Cog):
 
         if answer in question.values():
             await ctx.send("Correct! Quiz complete.")
-            MyCog.update_quizScore(self, 1, str(ctx.message.author))
-            with open('data/mycog/currentQuestion.json', 'w') as outfile:
+            culture.update_quizScore(self, 1, str(ctx.message.author))
+            with open('data/culture/currentQuestion.json', 'w') as outfile:
                 json.dump(None, outfile)
         elif answer == "__GIVEMETHEANSWER__":
             await ctx.send(', '.join(question.values()))
@@ -156,7 +156,7 @@ class MyCog(commands.Cog):
             self.numanswers +=1
             if self.numanswers >= self.maxtries:
                 await ctx.send("Too many incorrect tries, ending quiz")
-                with open('data/mycog/currentQuestion.json', 'w') as outfile:
+                with open('data/culture/currentQuestion.json', 'w') as outfile:
                     json.dump(None, outfile)
                 return
             await ctx.send("Thats not it. Try again!")
@@ -175,7 +175,7 @@ class MyCog(commands.Cog):
             await ctx.send("Error: Language not supported \nSupported Languages: " + ', '.join(lang_dict.keys()))
             return
 
-        self.fp = 'data/mycog/' + str(self.lang) + '.json'
+        self.fp = 'data/culture/' + str(self.lang) + '.json'
         with open(self.fp) as json_file:
             data = json.load(json_file)
 
@@ -250,7 +250,7 @@ class MyCog(commands.Cog):
         msg = ""
         if guess == self.word and self.count <= 6:
             msg = "Congrats!!! You won in " + str(self.count) + " tries"
-            MyCog.update_wordleScore(self, 1, str(ctx.message.author))
+            culture.update_wordleScore(self, 1, str(ctx.message.author))
 
         elif self.count == 6:
             msg = "Darn, the word was: " + self.word + "\nTo play a new game enter ' %start <lang>'"
@@ -328,7 +328,7 @@ class MyCog(commands.Cog):
 
     @commands.command()    
     async def leaderboard(self, ctx):
-        with open('data/mycog/user.json', "r") as file:
+        with open('data/culture/user.json', "r") as file:
             data = json.load(file)
         
         board = []
