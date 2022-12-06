@@ -165,7 +165,7 @@ class culture(commands.Cog):
     @commands.command()
     async def wordle(self, ctx, lang):
         # load in word, how to do decide which
-        """This starts a new game of worlde
+        """This starts a new game of wordle
 
             inputs:
                 lang = language to be used in the wordle game
