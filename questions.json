@@ -5,15 +5,49 @@
         "1a": ["Answer1", "Answer2", "Answer3", "Answer4", "Answer5"]
     },
     "fr": {
-        "1": ["FRQuestion1", "FRQuestion2","FRQuestion3", "FRQuestion4", "FRQuestion5"],
-        "1a":["Answer1", "Answer2", "Answer3", "Answer4", "Answer5"]
+        "1": ["Ça va bien.\nChoose matching term\na. Comment est ta soeur?\nb. Comment t'appelles-tu?\nc. Comment ça va?\nd. Comment s'appelle-t-il?", 
+            "Je vais au parc.\nChoose matching term\na. Qu'est-ce que tu fais en ete?\nb. Ou est-ce que tu vas pour jouer au frisbee?\nc. Ou uest-ce que tu vas pour regarder un film?\nd. Qu'est-ce que tu fais en hiver?",
+            "Je fais du ski.\nChoose matching term\na. Qu'est-ce que tu fais en ete?\nb. Qu'est-ce que tu fais en hiver?\nc. Ou est-ce que tu vas pour jouer au frisbee?\nd. Ou est-ce que tu vas pour regarder un film?", 
+            "is a lunch or supper item made with eggs\nChoose matching term\na. Une crepe\nb. Une omelette\nc. Une limonade\nd. Une glace", 
+            "dreamy\nChoose matching term\na. Une glace\nb. Les yeux\nc. De reve\nd. Le jour",
+            "without\nChoose matching term\na. Avec\nb. Sans\nc. Meme\nd. L'or",
+            "the eyes\nChoose matching term\na. Les mains\nb. Les yeux\nc. Le corps\nd. Le coeur"],
+        "1a":["c", "b", "b", "b", "c", "b", "b"],
+        "2": ["What would the new sentence be with an object pronoun for 'Nous invitons Pierre?'\na. Nous l'invitons.\nb. Nous lui invitons.\nc. Nous invitons lui.\nd.Nous leur invitons",
+            "What would the new sentence be with an object pronoun for 'Tu ecris a Charlotte.'\na. Tu lui ecris. \nb. Tu la ecris. \nc. Tu ecris  a elle. \nd. Tu l'ecris.",
+            "What would the new sentence be with an object pronoun for 'J'aide mes parents.'\na. Je les aide. \nb. Je leur aide. \nc. Je l'aide. \nd. Je la aide. ",
+            "What would the new sentence be with an object pronoun for 'Nous parlons à nos amis.'\na. Nous leur parlons.\nb. Nous lui parlons. \nc. Nous la parlons. \nd. Nous le parlons. ",
+            "What would the new sentence be with an object pronoun for 'Vous lavez la voiture.'\na. Vous la lavez. \nb. Vous le lavez. \nc. Vous lui lavez. \nd. Vous les lavez. ",
+            "Translate into French. 'Amy talks to me.'\na. Amy me parle.\nb. Amy parle moi. \nc. Amy te parle. \nd. Amy mon parle. ",
+            "What would the new sentence be with an object pronoun for 'Vous allez à la piscine.'\na. la\nb. lui\nc. y\nd. en",
+            "Translate into English: J'y vais demain.\na. I am going tomorrow.\nb. I am going there tomorrow.\nc. I have to go there tomorrow.\nd. I am going there with him tomorrow."],
+        "2a":["a", "a", "a", "a", "a", "a", "c", "b"],
+        "3": ["Which one of these constructions expresses the immediate past?\na. je vais parler\nb. je veux parler\nc. je viens de parler\nd. J'ai parle",
+            "Which one of these constructions correctly reflects le passe compose?\na. Il a fini\nb. Il est fini\nc. il va finir\nd. Il vient de finir",
+            "Which one of these conjugations is NOT a valid form of the verb 'mettre'?\na. je mets\nb. vous mettez\nc. tu mets\nd. Ils mettrent",
+            "Which one of these is the correct past participle for the verb 'prendre'?\na. prenu\nb. pris\nc. prendu\nd. Prende", 
+            "Which one of these is a demonstrative adjective?\na. cette\nb. une\nc. la\nd. sa",
+            "Which one of these comparisons is NOT valid?\na. moins cher que\nb. Aussi beau que\nc. plus bon que\nd. Moins laid que",
+            "When forming a command in French (the imperative), you may refer to all of these subject prounouns except?\na. tu\nb. ils\nc. nous\nd. vous",
+            "All of the following verbs require 'etre' in the passe compose except:\na. partir\nb. sortir\nc. venir\nd. devoir",
+            "What would you do to finish this past participle? Les filles sont arrive_____?\na. nothing\nb. add -e\nc. add -es\nd. add -s",
+            "What would you place in front of this country? ______Portugal\na. au\nb. en\nc. aux\nd. a"],
+        "3a":["c", "a", "d", "b", "a", "c", "b", "d", "c", "b"]
     },
     "de": {
-        "1": ["DEQuestion1", "DEQuestion2","DEQuestion3", "DEQuestion4", "DEQuestion5"],
+        "1": ["DEQuestion1", 
+        "DEQuestion2",
+        "DEQuestion3", 
+        "DEQuestion4", 
+        "DEQuestion5"],
         "1a":["Answer1", "Answer2", "Answer3", "Answer4", "Answer5"]
     },
     "es": {
-        "1": ["ESQuestion1", "ESQuestion2","ESQuestion3", "ESQuestion4", "ESQuestion5"],
+        "1": ["ESQuestion1", 
+        "ESQuestion2",
+        "ESQuestion3", 
+        "ESQuestion4", 
+        "ESQuestion5"],
         "1a":["Answer1", "Answer2", "Answer3", "Answer4", "Answer5"]
     }
 }

@@ -86,7 +86,7 @@ class MyCog(commands.Cog):
         if lang not in data['supported_languages'].values():
             await ctx.send("Error: Language not supported \nSupported Languages: " + ', '.join(data['supported_languages']))
         else:
-            qn = randint(0,4)
+            qn = randint(0,len(data[lang][difficulty])-1)
             with open('data/mycog/currentQuestion.json', 'w') as outfile:
                 json.dump({data[lang][difficulty][qn]:data[lang][difficulty+"a"][qn]}, outfile)
             await ctx.send(data[lang][difficulty][qn])
