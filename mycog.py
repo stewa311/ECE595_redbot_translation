@@ -161,6 +161,11 @@ class MyCog(commands.Cog):
     #Wordle
     @commands.command()
     async def start(self, ctx, lang):
+        """This command starts a wordle game
+        
+            inputs:
+                lang = language to play a game with
+        """
         # load in word, how to do decide which
 
         # Error check the language? Or should we sync with quiz game
@@ -204,6 +209,11 @@ class MyCog(commands.Cog):
     
     @commands.command()
     async def guess(self, ctx, guess: str):
+        """This command is used to make a guess in the wordle game
+        
+            inputs:
+                guess = five letter word guess
+        """
         # Validate guess
         if self.invalid_check(guess):
             await ctx.send(self.invalid_check(guess))
