@@ -298,7 +298,7 @@ class culture(commands.Cog):
 
     @commands.command()
     async def register_user(self, ctx, username=None):
-	"""This command registers a new user
+        """This command registers a new user
         
             inputs:
                 username = The username you want to store for the user
@@ -333,7 +333,7 @@ class culture(commands.Cog):
 
     @commands.command()
     async def delete_user(self, ctx, username):
-    	"""This command deletes an existing user
+        """This command deletes an existing user
         
             inputs:
                 username = The username of the user you want to delete
@@ -359,7 +359,7 @@ class culture(commands.Cog):
 
     @commands.command()
     async def leaderboard(self, ctx):
-    	"""This command shows the leaderboard for the games"""
+        """This command shows the leaderboard for the games"""
     
         with open('data/culture/user.json', "r") as file:
             data = json.load(file)
