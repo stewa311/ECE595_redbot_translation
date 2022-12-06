@@ -26,7 +26,6 @@ class MyCog(commands.Cog):
         self.bot = bot
         self.numanswers = 0
         self.maxtries = 2
-        self.default_difficulty = "1"
         self.filepath = 'data/mycog/user.json' #Change it to the right user filepath
         
         #Wordle
@@ -91,11 +90,11 @@ class MyCog(commands.Cog):
 
         temp = [language["English"] + ": " + language["alpha2"] + "\n" for language in data['languages1']]
         await ctx.send("".join(temp))
-        temp = [language["English"] + ": " + language["alpha2"] + "\n" for language in data['languages2']]
+        temp = [language["English"] + ": " + language["alpha2"] + "\n" for language in data['languages1']]
         await ctx.send("".join(temp))
 
     @commands.command()
-    async def quiz_settings(self, ctx, maxtries=2, default_difficulty="1"):
+    async def quiz_settings(self, ctx, maxtries=2):
         """This sets quiz settings
         
             inputs:
@@ -104,11 +103,9 @@ class MyCog(commands.Cog):
 
         self.maxtries = maxtries
         await ctx.send("Max tries set to " + str(self.maxtries))
-        self.default_difficulty = default_difficulty
-        await ctx.send("Default difficulty set to " + str(self.default_difficulty))
 
     @commands.command()
-    async def quiz(self, ctx, lang, difficulty=None):
+    async def quiz(self, ctx, lang, difficulty="1"):
         """This command starts a quiz
         
             inputs:
@@ -116,8 +113,7 @@ class MyCog(commands.Cog):
                 length = number of quiz questions to be asked
                 difficulty = difficulty level (1-3)
         """
-        if difficulty is None:
-            difficulty = self.default_difficulty
+        
         self.numanswers = 0
         with open('data/mycog/questions.json') as json_file:
             data = json.load(json_file)
@@ -168,11 +164,6 @@ class MyCog(commands.Cog):
     #Wordle
     @commands.command()
     async def start(self, ctx, lang):
-        """This command starts a wordle game
-        
-            inputs:
-                lang = language to play a game with
-        """
         # load in word, how to do decide which
 
         # Error check the language? Or should we sync with quiz game
@@ -216,11 +207,6 @@ class MyCog(commands.Cog):
     
     @commands.command()
     async def guess(self, ctx, guess: str):
-        """This command is used to make a guess in the wordle game
-        
-            inputs:
-                guess = five letter word guess
-        """
         # Validate guess
         if self.invalid_check(guess):
             await ctx.send(self.invalid_check(guess))
@@ -292,11 +278,6 @@ class MyCog(commands.Cog):
 
     @commands.command()
     async def register_user(self, ctx, username=None):
-	"""This command registers a new user
-        
-            inputs:
-                username = The username you want to store for the user
-        """	
 
         if (username == None) or (username == ""):
             username = str(ctx.message.author)
@@ -326,13 +307,7 @@ class MyCog(commands.Cog):
             await ctx.send(f"{username} is registered")
 
     @commands.command()    
-    async def delete_user(self, ctx, username=None):
-    	"""This command deletes an existing user
-        
-            inputs:
-                username = The username of the user you want to delete
-        """	
-    
+    async def delete_user(self, ctx, username):
         if (username == None) or (username == ""):
             await ctx.send("Please enter a valid username after the command.")
 
@@ -352,8 +327,6 @@ class MyCog(commands.Cog):
 
     @commands.command()    
     async def leaderboard(self, ctx):
-    	"""This command shows the leaderboard for the games"""
-    
         with open('data/mycog/user.json', "r") as file:
             data = json.load(file)
         

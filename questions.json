@@ -63,11 +63,11 @@
         "3a":["c", "a", "c", "c", "b", "d", "c"]
     },
     "es": {
-        "1": ["Which is the correct verb conjugation for “escribir”\na. Tú escribo\nb. Ellos escribimos\nc. Tú escribes\nd. Nosotras escriben", 
+        "1": ["Which is the correct verb conjugation for 'escribir'\na. Tu escribo\nb. Ellos escribimos\nc. Tu escribes\nd. Nosotras escriben", 
             "Determine if the noun is singular or plural, masculine or feminine: El cereal\na. Plural/masculine\nb. singular/masculine\nc. Plural/Feminine\nd. Singular/feminine",
             "Choose the adjective to complete the sentence: Me ________ las papas fritas.\na. gusta\nb. gusta nada\nc. gusta mucho\nd. gustan", 
             "Which of the following is an infinitive?\na. escribe\nb. comer\nc. habla\nd. bebo", 
-            "Which of the following is a conjugation of “escuchar”\na. escuchar\nb. escuchir\nc. escuchamos\nd. escuchemos",
+            "Which of the following is a conjugation of 'escuchar'\na. escuchar\nb. escuchir\nc. escuchamos\nd. escuchemos",
             "Choose the correct time: Son las seis y treinta\na. 6:20\nb. 6:00\nc. 6:50\nd. 6:30"],
         "1a":["c", "b", "d", "b", "c", "d"],
         "2":["My tios are what relation to my padres?\na. hermanos\nb. hijos\nc. abuelos\nd. primos",
@@ -75,11 +75,11 @@
             "If you were to state these books are MY books. Which possessive adjective do you use?\na. mi\nb. mis\nc. su\nd. sus",
             "If comer is to comedor, cocinar is to:\na. sala\nb. cocina\nc. baño\nd. dormitorio",
             "I want to lay down can be phrased 'Quiero acostarme.' How else can this be phrased?\na. Quiero me acostar\nb. Me quiero acostar\nc. quiero acuestome\nd. quiero me acuesto",
-            "Which of the following items would you find in a toiletry/personal product bag?\na. secadora\nb. toalla\nc. acondicionador\nd. traje de baño",
+            "Which of the following items would you find in a toiletry/personal product bag?\na. secadora\nb. toalla\nc. acondicionador\nd. traje de bano",
             "You are making a bowl a soup, what do you need to eat it?\na. cuchillo\nb. cuchara\nc. tenedor\nd. manos"],
         "2a":["a", "d", "b", "b", "b", "c", "b"],
-        "3":["Imperfect or Preterite? I used to VISIT my grandma every Sunday.\na. visité\nb. visitaba\nc. visitó\nd. vistabas",
-            "Which of the following expressions does NOT indicate an imperfect verb will occur?\na. todos los días\nb. siempre\nc. a veces\nd. lunes"],
+        "3":["Imperfect or Preterite? I used to VISIT my grandma every Sunday.\na. visite\nb. visitaba\nc. visito\nd. vistabas",
+            "Which of the following expressions does NOT indicate an imperfect verb will occur?\na. todos los dias\nb. siempre\nc. a veces\nd. lunes"],
         "3a":["b", "d"]
     }
 }
