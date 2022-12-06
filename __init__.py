@@ -1,5 +1,5 @@
-from .mycog import MyCog
+from .culture import culture
 
 
 def setup(bot):
-    bot.add_cog(MyCog(bot))
+    bot.add_cog(culture(bot))
