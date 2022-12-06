@@ -82,13 +82,16 @@ class MyCog(commands.Cog):
 
         with open('data/mycog/languages.json') as json_file:
             data = json.load(json_file)
-        if search not in data['languages']:
-            await ctx.send(data['languages1'])
-            await ctx.send(data['languages2'])
-        else:
-            for language in data['languages']:
-                if language["English"] == search:
-                    await ctx.send(language["English"] +": " + language["alpha2"])
+
+        for language in data['languages']:
+            if language["English"] == search:
+                await ctx.send(language["English"] +": " + language["alpha2"])
+                return
+
+        temp = [language["English"] + ": " + language["alpha2"] + "\n" for language in data['languages1']]
+        await ctx.send("".join(temp))
+        temp = [language["English"] + ": " + language["alpha2"] + "\n" for language in data['languages2']]
+        await ctx.send("".join(temp))
 
     @commands.command()
     async def quiz_settings(self, ctx, maxtries=2):
