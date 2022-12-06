@@ -163,8 +163,13 @@ class culture(commands.Cog):
 
     # Wordle
     @commands.command()
-    async def start(self, ctx, lang):
+    async def wordle(self, ctx, lang):
         # load in word, how to do decide which
+        """This starts a new game of worlde
+
+            inputs:
+                lang = language to be used in the wordle game
+        """
 
         # Error check the language? Or should we sync with quiz game
         lang_dict = {"English": "eng", "French": "fra", "Italian": "ita", "Latin": "lat", "Portugese": "por",
@@ -206,6 +211,12 @@ class culture(commands.Cog):
 
     @commands.command()
     async def guess(self, ctx, guess: str):
+        """This enables a user to make a wordle guess
+
+            inputs:
+                guess = five letter word to guess
+        """
+
         # Validate guess
         if self.invalid_check(guess):
             await ctx.send(self.invalid_check(guess))
