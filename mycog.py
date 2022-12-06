@@ -25,7 +25,7 @@ class MyCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.numanswers = 0
-        self.maxtries = 3
+        self.maxtries = 2
         self.filepath = 'data/mycog/user.json' #Change it to the right user filepath
         
         #Wordle
@@ -90,7 +90,18 @@ class MyCog(commands.Cog):
                     await ctx.send(language["English"] +": " + language["alpha2"])
 
     @commands.command()
-    async def quiz(self, ctx, lang, difficulty="1", tries=3):
+    async def quiz_settings(self, ctx, maxtries=2):
+        """This sets quiz settings
+        
+            inputs:
+                maxtries = max number of tries per question to set
+        """
+
+        self.maxtries = maxtries
+        await ctx.send("Max tries set to " + str(self.maxtries))
+
+    @commands.command()
+    async def quiz(self, ctx, lang, difficulty="1"):
         """This command starts a quiz
         
             inputs:
@@ -100,7 +111,6 @@ class MyCog(commands.Cog):
         """
         
         self.numanswers = 0
-        self.maxtries = tries
         with open('data/mycog/questions.json') as json_file:
             data = json.load(json_file)
         if lang in data['supported_languages'].keys():
