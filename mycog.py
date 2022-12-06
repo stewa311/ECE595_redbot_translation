@@ -251,8 +251,8 @@ class MyCog(commands.Cog):
     def endgame(self, guess):
         msg = ""
         if guess == self.word and self.count <= 6:
-            msg = "Congrats!!! You won in " + str(self.count) + " tries"
-	    MyCog.update_quizScore(self, 1, str(ctx.message.author))
+		msg = "Congrats!!! You won in " + str(self.count) + " tries"
+		MyCog.update_wordleScore(self, 1, str(ctx.message.author))
 
         elif self.count == 6:
             msg = "Darn, the word was: " + self.word + "\nTo play a new game enter ' %start <lang>'"
