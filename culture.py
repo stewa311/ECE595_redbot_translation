@@ -214,14 +214,22 @@ class culture(commands.Cog):
         guess_list = list(guess.lower())
         square = ColorAbsent
         buffer = 0
+        letter_count = 0
 
         for j in range(5):
             if guess_list[j] not in list(self.word):
                 square = EmptySquare
-            elif (guess_list[j] in list(self.word)) and (self.word[j] != guess_list[j]):
-                square = YellowSquare
             elif guess_list[j] == self.word[j]:
                 square = GreenSquare
+            elif (guess_list[j] in list(self.word)) and (self.word[j] != guess_list[j]):
+                if guess_list.count(guess_list[j]) > 1 and letter_count == 0:
+                    if letter_count == 0:
+                        square = YellowSquare
+                        letter_count += 1
+                    else:
+                        square = EmptySquare
+                else:
+                    square = YellowSquare
 
             # Update grid
             x_offset = j * squareSize + buffer
