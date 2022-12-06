@@ -2,7 +2,11 @@
     "supported_languages": {"English":"en", "French":"fr", "German":"de", "Spanish":"es"},
     "en": {
         "1": ["ENQuestion1", "ENQuestion2","ENQuestion3", "ENQuestion4", "ENQuestion5"],
-        "1a": ["Answer1", "Answer2", "Answer3", "Answer4", "Answer5"]
+        "1a": ["Answer1", "Answer2", "Answer3", "Answer4", "Answer5"],
+        "2":[""],
+        "2a":[""],
+        "3":[""],
+        "3a":[""]
     },
     "fr": {
         "1": ["Ça va bien.\nChoose matching term\na. Comment est ta soeur?\nb. Comment t'appelles-tu?\nc. Comment ça va?\nd. Comment s'appelle-t-il?", 
@@ -35,19 +39,47 @@
         "3a":["c", "a", "d", "b", "a", "c", "b", "d", "c", "b"]
     },
     "de": {
-        "1": ["DEQuestion1", 
-        "DEQuestion2",
-        "DEQuestion3", 
-        "DEQuestion4", 
-        "DEQuestion5"],
-        "1a":["Answer1", "Answer2", "Answer3", "Answer4", "Answer5"]
+        "1": ["How do you say 'Good Evening' to an adult?\na. Guten Morgen!\nb. Tag!\nc. Guten Abend\nd. Nacht!", 
+            "How do you say 'Hello' to a friend?\na. Guten Morgen!\nb. Tag!\nc. Guten Abend!\nd. Nacht!",
+            "Fill in the blank with the appropriate form of the verb heißen:\nWie ______________ du?\na. heißen\nb. heiße\nc. heißt\nd. heist", 
+            "Fill in the blank with the appropriate form of the verb heißen:\nIch ______________ Markus.\na. heißen\nb. heiße\nc. heißt\nd. heist", 
+            "What is zehn in english\na. Shelby allison\nb. twentyfive\nc. ten\nd. Chicken leg bis",
+            "what is elf in english\na. eleven\nb. twelve\nc. thirteen\nd. forever"],
+        "1a":["c", "b", "c", "b", "c", "a"],
+        "2":["Jugendliche\na. teenager\nb. child\nc. adult\nd. senior citizen",
+            "beliebter als\na. less popular than\nb. more popular than\nc. as popular as\nd. better than",
+            "täglich\na. every day\nb. every year\nc. every week\nd. every month",
+            "am meisten\na. the least\nb. the most\nc. less than\nd. more than",
+            "am wenigsten\na. the least\nb. the most\nc. less than\nd. more than",
+            "Mehr als ein Viertel\na. more than half\nb. more than three-fourths\nc. more than one fourth\nd. les than one fourth"],
+        "2a":["a", "b", "a", "b", "a", "c"],
+        "3":["wichtig\na. wrong\nb. correct\nc. important\nd. funny",
+            "Was ist der Zweck?\na. What is the purpose?\nb. What is the answer?\nc. What is an advantage?\nd. What is a disadvantag?",
+            "Wofür interessieren Sie sich?\na. What are you writing about?\nb. What kind of activities do you like?\nc. What are you interested in?\nd. Why are you interested in that?",
+            "Sachen\na. socks\nb. cookies\nc. things\nd. games",
+            "In der Nähe\na. far away\nb. close by\nc. one block away\nd. in the suburbs",
+            "Die U-Bahn\na. bus\nb. train\nc. airplane\nd. subway",
+            "Werbung\na. school\nb. internship\nc. advertisement\nd. money"],
+        "3a":["c", "a", "c", "c", "b", "d", "c"]
     },
     "es": {
-        "1": ["ESQuestion1", 
-        "ESQuestion2",
-        "ESQuestion3", 
-        "ESQuestion4", 
-        "ESQuestion5"],
-        "1a":["Answer1", "Answer2", "Answer3", "Answer4", "Answer5"]
+        "1": ["Which is the correct verb conjugation for “escribir”\na. Tú escribo\nb. Ellos escribimos\nc. Tú escribes\nd. Nosotras escriben", 
+            "Determine if the noun is singular or plural, masculine or feminine: El cereal\na. Plural/masculine\nb. singular/masculine\nc. Plural/Feminine\nd. Singular/feminine",
+            "Choose the adjective to complete the sentence: Me ________ las papas fritas.\na. gusta\nb. gusta nada\nc. gusta mucho\nd. gustan", 
+            "Which of the following is an infinitive?\na. escribe\nb. comer\nc. habla\nd. bebo", 
+            "Which of the following is a conjugation of “escuchar”\na. escuchar\nb. escuchir\nc. escuchamos\nd. escuchemos",
+            "Choose the correct time: Son las seis y treinta\na. 6:20\nb. 6:00\nc. 6:50\nd. 6:30"],
+        "1a":["c", "b", "d", "b", "c", "d"],
+        "2":["My tios are what relation to my padres?\na. hermanos\nb. hijos\nc. abuelos\nd. primos",
+            "Which possessive adjective is used to state this OUR house?\na. nosotros\nb. su\nc. tu\nd. nuestra",
+            "If you were to state these books are MY books. Which possessive adjective do you use?\na. mi\nb. mis\nc. su\nd. sus",
+            "If comer is to comedor, cocinar is to:\na. sala\nb. cocina\nc. baño\nd. dormitorio",
+            "I want to lay down can be phrased 'Quiero acostarme.' How else can this be phrased?\na. Quiero me acostar\nb. Me quiero acostar\nc. quiero acuestome\nd. quiero me acuesto",
+            "Which of the following items would you find in a toiletry/personal product bag?\na. secadora\nb. toalla\nc. acondicionador\nd. traje de baño",
+            "You are making a bowl a soup, what do you need to eat it?\na. cuchillo\nb. cuchara\nc. tenedor\nd. manos"],
+        "2a":["a", "d", "b", "b", "b", "c", "b"],
+        "3":["Imperfect or Preterite? I used to VISIT my grandma every Sunday.\na. visité\nb. visitaba\nc. visitó\nd. vistabas",
+            "Which of the following expressions does NOT indicate an imperfect verb will occur?\na. todos los días\nb. siempre\nc. a veces\nd. lunes"],
+        "3a":["b", "d"]
     }
 }
