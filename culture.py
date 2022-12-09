@@ -222,40 +222,41 @@ class culture(commands.Cog):
             await ctx.send(self.invalid_check(guess))
             return
 
-        # Guess is valid
-        guess_list = list(guess.lower())
-        square = ColorAbsent
-        buffer = 0
-        letter_count = 0
+            # Guess is valid
+            guess_list = list(guess.lower())
+            count_list = []
+            for i in range(5):
+                count_list.append(guess_list.count(guess_list[i]))
+            square = [0] * 5
+            buffer = 0
+            word_list = list(self.word.lower())
 
-        for j in range(5):
-            if guess_list[j] not in list(self.word):
-                square = EmptySquare
-            elif (guess_list[j] in list(self.word)) and (self.word[j] != guess_list[j]):
-                if guess_list.count(guess_list[j]) > 1:
-                    if letter_count == 0:
-                        square = YellowSquare
-                        letter_count += 1
-                    else:
-                        square = EmptySquare
-                else:
-                    square = YellowSquare
-            elif guess_list[j] == self.word[j]:
-                square = GreenSquare
-                if guess_list.count(guess_list[j]) > 1:
-                    letter_count += 1
+            for i in range(5):
+                square[i] = [EmptySquare, guess_list[i]]
 
-            # Update grid
-            x_offset = j * squareSize + buffer
-            self.background.paste(square, (x_offset, self.rowOffset))
+            for i in range(len(guess_list)):
+                if guess_list[i] == self.word[i]:
+                    square[i][0] = GreenSquare
+                    guess_list[i] = None
+                    word_list[i] = None
 
-            myFont = ImageFont.truetype('arial.ttf', 42)
-            editable = ImageDraw.Draw(self.background)
-            _, _, w, h = editable.textbbox((0, 0), str(guess_list[j]), font=myFont)
-            editable.text(((squareSize - w) // 2 + x_offset, (squareSize - h) // 2 + self.rowOffset),
-                          str(guess_list[j]), font=myFont, fill=(40, 37, 35))
+            for i in range(len(guess_list)):
+                if guess_list[i] is not None and guess_list[i] in word_list:
+                    square[i][0] = YellowSquare
+                    word_list[word_list.index(guess_list[i])] = None
 
-            buffer += 5
+            for i in range(5):
+                # Update grid
+                x_offset = i * squareSize + buffer
+                self.background.paste(square[i][0], (x_offset, self.rowOffset))
+
+                myFont = ImageFont.truetype('arial.ttf', 42)
+                editable = ImageDraw.Draw(self.background)
+                _, _, w, h = editable.textbbox((0, 0), str(square[i][1]), font=myFont)
+                editable.text(((squareSize - w) // 2 + x_offset, (squareSize - h) // 2 + self.rowOffset),
+                              str(square[i][1]), font=myFont, fill=(40, 37, 35))
+
+                buffer += 5
 
         self.rowOffset += squareSize + 5
         self.count += 1
